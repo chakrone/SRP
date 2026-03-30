@@ -9,12 +9,13 @@ export default function SneakerModel(props) {
     const { scene } = useGLTF(modelPath, 'https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
 
     const { viewport } = useThree();
-    const isMobile = viewport.width < 5;
+    const isMobile = viewport.width < 7;
+    const scale = isMobile ? 0.42 : 1.45;
 
     useFrame((state) => {
         const t = state.clock.getElapsedTime();
         if (group.current) {
-            group.current.scale.setScalar((isMobile ? 0.7 : 1.45) + Math.sin(t * 0.8) * 0.01);
+            group.current.scale.setScalar(scale + Math.sin(t * 0.8) * 0.01);
         }
     });
 

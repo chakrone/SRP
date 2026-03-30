@@ -4,10 +4,13 @@ import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import SneakerModel from './SneakerModel';
 import Loader from './Loader';
 
+const isMobileScreen = () => typeof window !== 'undefined' && window.innerWidth < 768;
+
 export default function Scene() {
+    const mobileFov = isMobileScreen();
     return (
         <div className="w-full h-full relative">
-            <Canvas camera={{ position: [0, 0.2, 3.2], fov: 42 }} gl={{ alpha: true, antialias: true }}>
+            <Canvas camera={{ position: [0, 0.2, mobileFov ? 4.5 : 3.2], fov: mobileFov ? 55 : 42 }} gl={{ alpha: true, antialias: true }}>
                 {/* Bright studio-style lighting for light mode */}
                 <ambientLight intensity={1.4} color="#ffffff" />
                 <spotLight

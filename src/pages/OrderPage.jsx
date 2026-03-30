@@ -42,8 +42,8 @@ const PRODUCT_PRICE = 3800;
 // ==========================================
 
 const SectionHeader = ({ number, title, icon: Icon }) => (
-    <div className="flex items-center gap-3 mb-6 pb-3 border-b border-slate-100">
-        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 text-sky-500 font-bold text-sm">
+    <div className="flex items-center gap-3 mb-5 pb-3 border-b border-slate-100">
+        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 text-sky-500 font-bold text-sm flex-shrink-0">
             {number}
         </div>
         <h2 className="text-base font-semibold text-slate-800 tracking-wide flex items-center gap-2">
@@ -157,11 +157,12 @@ export default function OrderPage() {
     if (submitted) {
         return (
             <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center p-4 bg-grid">
-                <div className="max-w-md w-full bg-white border border-slate-100 rounded-2xl shadow-xl p-8 relative overflow-hidden text-center">
+                <div className="max-w-md w-full bg-white border border-slate-100 rounded-2xl shadow-xl p-6 sm:p-8 relative overflow-hidden text-center">
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-400 via-indigo-400 to-sky-400" />
 
-                    <div className="w-20 h-20 bg-sky-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_0_8px_rgba(14,165,233,0.08)]">
-                        <CheckCircle size={38} className="text-sky-500" />
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sky-50 rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6 shadow-[0_0_0_8px_rgba(14,165,233,0.08)]">
+                        <CheckCircle size={32} className="text-sky-500 sm:hidden" />
+                        <CheckCircle size={38} className="text-sky-500 hidden sm:block" />
                     </div>
 
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 mb-4">
@@ -169,12 +170,12 @@ export default function OrderPage() {
                         <span className="text-emerald-600 text-[10px] font-bold tracking-wider uppercase">Order Confirmed</span>
                     </div>
 
-                    <h2 className="text-2xl font-black text-slate-900 mb-2">You're all set! 🚀</h2>
-                    <p className="text-slate-400 text-sm mb-8">
+                    <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-2">You're all set! 🚀</h2>
+                    <p className="text-slate-400 text-sm mb-6 sm:mb-8">
                         Your Smart Roller Pro order is placed. We'll contact you at <span className="text-slate-700 font-medium">{formData.email}</span> shortly.
                     </p>
 
-                    <div className="bg-slate-50 rounded-xl p-4 mb-6 text-left border border-slate-100">
+                    <div className="bg-slate-50 rounded-xl p-4 mb-5 sm:mb-6 text-left border border-slate-100">
                         <div className="text-[10px] text-slate-400 uppercase font-bold mb-3 tracking-wider">Order Summary</div>
                         <div className="space-y-2">
                             {[
@@ -204,7 +205,7 @@ export default function OrderPage() {
 
     // ---- Order Form ----
     return (
-        <div className="min-h-screen bg-[#f8fafc] text-slate-800 pb-24 relative bg-grid">
+        <div className="min-h-screen bg-[#f8fafc] text-slate-800 relative bg-grid">
             {/* Ambient */}
             <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-sky-100 rounded-full blur-[150px] opacity-50" />
@@ -213,31 +214,57 @@ export default function OrderPage() {
 
             <NavBar />
 
-            <div className="max-w-7xl mx-auto px-4 pt-28 relative z-10">
+            {/* Main content — add bottom padding on mobile for the sticky bar */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-32 lg:pb-16 relative z-10">
 
                 {/* Header */}
-                <div className="mb-10">
+                <div className="mb-8">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-sky-50 border border-sky-100 mb-4">
                         <Zap size={11} className="text-sky-500" />
                         <span className="text-sky-600 text-[10px] font-bold tracking-widest uppercase">Secure Checkout</span>
                     </div>
-                    <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">
                         Order Your{' '}
                         <span className="bg-gradient-to-r from-sky-500 to-indigo-500 bg-clip-text text-transparent">Smart Roller Pro</span>
                     </h1>
                     <p className="text-slate-400 text-sm">Fill in your details and we'll get it shipped to you anywhere in the world.</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+
+                    {/* ── MOBILE ONLY: Compact product summary at top ── */}
+                    <div className="lg:hidden col-span-1">
+                        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                            <div className="h-1 bg-gradient-to-r from-sky-400 via-indigo-400 to-sky-400" />
+                            <div className="p-4 flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-xl bg-sky-100 border border-sky-200 flex items-center justify-center flex-shrink-0">
+                                    <Zap size={20} className="text-sky-500" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="text-[10px] text-slate-400 uppercase tracking-wider">Limited Edition</div>
+                                    <div className="font-black text-slate-900 text-base leading-tight truncate">Smart Roller Pro</div>
+                                    <div className="flex items-center gap-1 mt-0.5">
+                                        {[1,2,3,4,5].map(s => <Star key={s} size={9} className="fill-amber-400 text-amber-400" />)}
+                                        <span className="text-[10px] text-slate-400 ml-1">5.0 (128)</span>
+                                    </div>
+                                </div>
+                                <div className="text-right flex-shrink-0">
+                                    <div className="text-2xl font-black text-slate-900 leading-tight">{PRODUCT_PRICE.toLocaleString()}</div>
+                                    <div className="text-xs font-bold text-sky-500">DH</div>
+                                    <div className="text-[10px] text-emerald-500 font-semibold mt-0.5">FREE ship</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     {/* LEFT COLUMN */}
-                    <div className="lg:col-span-7 space-y-6">
+                    <div className="lg:col-span-7 space-y-5 lg:space-y-6">
 
                         {/* 1. Personal Details */}
-                        <section className="bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm">
+                        <section className="bg-white rounded-2xl p-5 sm:p-6 md:p-8 border border-slate-100 shadow-sm">
                             <SectionHeader number="1" title="Personal Details" icon={User} />
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div className="md:col-span-2">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                                <div className="sm:col-span-2">
                                     <InputField label="Full Name" name="name" placeholder="John Doe" value={formData.name} onChange={handleChange} icon={User} />
                                 </div>
                                 <InputField label="Email Address" name="email" type="email" placeholder="you@example.com" value={formData.email} onChange={handleChange} icon={Mail} />
@@ -248,13 +275,13 @@ export default function OrderPage() {
                         </section>
 
                         {/* 2. Size Selection */}
-                        <section className="bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm">
+                        <section className="bg-white rounded-2xl p-5 sm:p-6 md:p-8 border border-slate-100 shadow-sm">
                             <SectionHeader number="2" title="Select Your Size" icon={Package} />
                             <div className="mb-3 flex items-center justify-between">
                                 <span className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">EU Sizing</span>
                                 <span className="text-[10px] text-slate-400">Unsure? Size up for comfort</span>
                             </div>
-                            <div className="grid grid-cols-5 gap-2.5">
+                            <div className="grid grid-cols-5 gap-2">
                                 {SIZES.map((size) => (
                                     <label key={size} className="cursor-pointer">
                                         <input
@@ -265,7 +292,7 @@ export default function OrderPage() {
                                             onChange={handleChange}
                                             className="hidden peer"
                                         />
-                                        <div className="h-12 flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-500 text-sm font-medium
+                                        <div className="h-11 sm:h-12 flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-500 text-sm font-medium
                                             hover:border-sky-300 hover:text-sky-600 hover:bg-sky-50 transition-all duration-150
                                             peer-checked:bg-sky-500 peer-checked:border-sky-500 peer-checked:text-white peer-checked:font-bold peer-checked:shadow-[0_4px_12px_rgba(14,165,233,0.3)]">
                                             {size}
@@ -281,7 +308,7 @@ export default function OrderPage() {
                         </section>
 
                         {/* 3. Payment */}
-                        <section className="bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm">
+                        <section className="bg-white rounded-2xl p-5 sm:p-6 md:p-8 border border-slate-100 shadow-sm">
                             <SectionHeader number="3" title="Payment Method" icon={CreditCard} />
 
                             <div className="space-y-3">
@@ -289,22 +316,22 @@ export default function OrderPage() {
                                     { value: 'Cash On Delivery', label: 'Cash on Delivery', desc: 'Pay when your order arrives', icon: Truck },
                                     { value: 'Credit Card', label: 'Credit / Debit Card', desc: 'Visa, Mastercard, Amex accepted', icon: CreditCard },
                                 ].map(({ value, label, desc, icon: PayIcon }) => (
-                                    <label key={value} className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all duration-200 ${
+                                    <label key={value} className={`flex items-center gap-3 sm:gap-4 p-4 rounded-xl border cursor-pointer transition-all duration-200 ${
                                         formData.paymentMethod === value
                                             ? 'border-sky-200 bg-sky-50 shadow-[0_0_0_3px_rgba(14,165,233,0.08)]'
                                             : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
                                     }`}>
                                         <input type="radio" name="paymentMethod" value={value} checked={formData.paymentMethod === value} onChange={handleChange} className="hidden" />
-                                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors flex-shrink-0 ${
                                             formData.paymentMethod === value ? 'bg-sky-100 text-sky-500' : 'bg-slate-100 text-slate-400'
                                         }`}>
                                             <PayIcon size={18} />
                                         </div>
-                                        <div className="flex-1">
+                                        <div className="flex-1 min-w-0">
                                             <div className={`font-semibold text-sm ${formData.paymentMethod === value ? 'text-slate-800' : 'text-slate-500'}`}>{label}</div>
                                             <div className="text-[11px] text-slate-400 mt-0.5">{desc}</div>
                                         </div>
-                                        <div className={`w-4 h-4 rounded-full border-2 transition-all flex items-center justify-center ${
+                                        <div className={`w-4 h-4 rounded-full border-2 transition-all flex items-center justify-center flex-shrink-0 ${
                                             formData.paymentMethod === value ? 'border-sky-500 bg-sky-500' : 'border-slate-300'
                                         }`}>
                                             {formData.paymentMethod === value && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
@@ -314,7 +341,7 @@ export default function OrderPage() {
 
                                 {/* Card details form */}
                                 {formData.paymentMethod === 'Credit Card' && (
-                                    <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-4">
+                                    <div className="p-4 sm:p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-4">
                                         <div className="flex items-center gap-2 mb-1">
                                             <ShieldCheck size={13} className="text-emerald-500" />
                                             <span className="text-[10px] text-emerald-600 font-semibold tracking-wider uppercase">SSL Secured · 256-bit Encryption</span>
@@ -403,8 +430,8 @@ export default function OrderPage() {
                         </div>
                     </div>
 
-                    {/* RIGHT COLUMN */}
-                    <div className="lg:col-span-5">
+                    {/* ── DESKTOP RIGHT COLUMN ── */}
+                    <div className="hidden lg:block lg:col-span-5">
                         <div className="sticky top-28 space-y-4">
 
                             {/* Product Card */}
@@ -522,12 +549,44 @@ export default function OrderPage() {
                 </form>
             </div>
 
+            {/* ── MOBILE ONLY: Sticky bottom order bar ── */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-slate-200 shadow-[0_-8px_30px_rgba(0,0,0,0.08)] px-4 py-3">
+                <div className="flex items-center gap-3">
+                    <div className="flex-1 min-w-0">
+                        <div className="text-[10px] text-slate-400 uppercase tracking-wider">Total</div>
+                        <div className="flex items-baseline gap-1">
+                            <span className="text-2xl font-black text-slate-900">{PRODUCT_PRICE.toLocaleString()}</span>
+                            <span className="text-sm font-bold text-sky-500">DH</span>
+                        </div>
+                        <div className="text-[10px] text-sky-500 font-semibold">Free shipping included</div>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={handleSubmit}
+                        disabled={isSubmitting}
+                        className="flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-bold px-6 py-3.5 rounded-xl shadow-[0_4px_20px_rgba(14,165,233,0.4)] transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed text-sm uppercase tracking-wide flex-shrink-0"
+                    >
+                        {isSubmitting ? (
+                            <>
+                                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                <span>Processing</span>
+                            </>
+                        ) : (
+                            <>
+                                Place Order
+                                <ChevronRight size={16} className="stroke-[3px]" />
+                            </>
+                        )}
+                    </button>
+                </div>
+            </div>
+
             {/* Error Toast */}
             {error && (
-                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white border border-red-200 text-red-600 px-6 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 backdrop-blur-xl z-50 max-w-sm w-full mx-4">
+                <div className="fixed bottom-20 lg:bottom-6 left-1/2 -translate-x-1/2 bg-white border border-red-200 text-red-600 px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 backdrop-blur-xl z-50 max-w-sm w-[calc(100%-2rem)]">
                     <AlertCircle size={16} className="text-red-400 flex-shrink-0" />
                     <span className="text-sm font-medium">{error}</span>
-                    <button onClick={() => setError(null)} className="ml-auto text-slate-300 hover:text-slate-500">✕</button>
+                    <button onClick={() => setError(null)} className="ml-auto text-slate-300 hover:text-slate-500 flex-shrink-0">✕</button>
                 </div>
             )}
         </div>
